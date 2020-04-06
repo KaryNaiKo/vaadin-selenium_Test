@@ -1,4 +1,5 @@
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -8,15 +9,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
-public class CalcTest {
+public class CalcTestIT {
 
     private static WebDriver driver;
 
     @BeforeClass
     public static void setupClass() {
-        ChromeDriverManager.getInstance().setup();
+        WebDriverManager.chromedriver().version("80").setup();
         driver = new ChromeDriver();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         driver.get("http://localhost:8080/");
@@ -71,7 +72,7 @@ public class CalcTest {
                 return button;
             }
         }
-        assertTrue("Not found button " + caption + " on the page. Check the operation of the web server and the location of the web elements on the page", false);
+        fail("Not found button " + caption + " on the page. Check the operation of the web server and the location of the web elements on the page");
         return null;
     }
 
